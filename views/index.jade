@@ -12,6 +12,13 @@ block content
           a(href="/") Go home
           br
           a(href="/ping") Ping
+        if (!user)
+          a(href="/login") Login
+          br
+          a(href="/register") Register
+        if (user)
+          p You are currently logged in as #{user.username}
+          a(href="/logout") Logout
 
   script
     $("#menu-toggle").click(function(e) {
