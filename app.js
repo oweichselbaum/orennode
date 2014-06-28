@@ -7,6 +7,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 // main config
+var flash = require('connect-flash');
 var app = express();
 app.set('port', process.env.PORT || 1337);
 app.set('views', __dirname + '/views');
@@ -15,10 +16,11 @@ app.set('view options', { layout: false });
 app.use(express.logger());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
-app.use(express.session());
+app.use(express.cookieParser('keyboard cat'));
+app.use(express.session(({ cookie: { maxAge: 60000 }})));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 

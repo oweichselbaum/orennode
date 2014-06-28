@@ -7,11 +7,12 @@ block content
         a#menu-toggle.btn.btn-default(href='#')
           i.fa.fa-bars
         .col-md-12
-          h1 Say something meaningful here.
-          p.lead Say something worthwhile here.
+          h1 Welcome to Oren's Site
+          p.lead There's a lot of info you want here
+          if message
+            p.message= message
           a(href="/") Go home
           br
-          a(href="/ping") Ping
         if (!user)
           a(href="/login") Login
           br
@@ -25,3 +26,6 @@ block content
       e.preventDefault();
       $("#wrapper").toggleClass("active");
     });
+    if ($('p.message').text() != "") {
+        $('p.message').wrap("<div class='alert'></div>")
+    }
