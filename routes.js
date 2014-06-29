@@ -4,8 +4,33 @@ var Account = require('./models/account');
 module.exports = function (app) {
 
     app.get('/', function (req, res) {
-        res.render('index', { user: req.user , message: req.flash('info') });
+        res.render('index', { user: req.user, message: req.flash('info') });
     });
+
+//    app.get('/account', ensureAuthenticated, function (req, res) {
+//        res.render('account', { user: req.user });
+//    });
+
+    app.get('/account', ensureAuthenticated, function (req, res) {
+        Account.findById(req.session.passport.user, function (err, user) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render('account', { user: user});
+            }
+
+        });
+    });
+
+    app.get('/auth/facebook',
+        passport.authenticate('facebook', {scope: ['email']}),
+        function (req, res) {
+        });
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', { failureRedirect: '/' }),
+        function (req, res) {
+            res.redirect('/account');
+        });
 
     app.get('/register', function (req, res) {
         res.render('register', { });
@@ -39,5 +64,12 @@ module.exports = function (app) {
     app.get('/ping', function (req, res) {
         res.send("pong!", 200);
     });
+
+    function ensureAuthenticated(req, res, next) {
+        if (req.isAuthenticated()) {
+            return next();
+        }
+        res.redirect('/')
+    }
 
 };
