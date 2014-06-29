@@ -2,6 +2,10 @@
     width: 800px;
 }
 
+#register-form label {
+    float: left;
+}
+
 #register-form .form-group {
     clear: both;
     line-height: 15px;

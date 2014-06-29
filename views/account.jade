@@ -3,16 +3,78 @@ html
 head
     title= title
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='//cdn.kendostatic.com/2013.3.1119/styles/kendo.common.min.css')
+    link(rel='stylesheet', href='//cdn.kendostatic.com/2013.3.1119/styles/kendo.bootstrap.min.css')
     link(href='/css/bootstrap.min.css', rel='stylesheet', media='screen')
+    link(href='/css/main.css', rel='stylesheet', media='screen')
+    script(src='http://code.jquery.com/jquery.js')
+    script(src='js/bootstrap.min.js')
 body
 .container
-    h1 You are logged in.
-    p.lead Say something worthwhile here.
-    a(href="/") Go home
+    h1 Complete Registration
+    p.lead Finish the registration form below
     br
-    a(href="/ping") Ping
-    br
-    br
-    a(href="/logout") Logout
-script(src='http://code.jquery.com/jquery.js')
-script(src='js/bootstrap.min.js')
+    h4= info
+
+    form(id='register-form', role='form', action="/account",method="post")
+        .form-group
+            label
+                | First Name
+            input.form-control(id='first_name', type='text', name="first_name", value=user.first_name,  placeholder='Enter First Name', required, data-required-msg='First Name is required')
+        .form-group
+            label
+                | Last Name
+            input.form-control(id='last_name', type='text', name="last_name",value=user.last_name, placeholder='Enter Last Name', required, data-required-msg='Last Name is required')
+        .form-group
+            label
+                | Email Address
+            input.form-control(id='email', type='email', name="username", value=user.username, placeholder='Enter Email', required, data-required-msg='Email is required')
+        .form-group
+            input(id='checkbox', type="checkbox", name="terms", value=user.terms, required, data-required-msg='Checking the checkbox is required')
+            label
+                | Agree to terms and conditions
+
+
+        button.btn.btn-default(type='submit') Submit
+
+
+script
+    if (window.location.hash && window.location.hash == '#_=_') {
+        window.location.hash = '';
+    }
+
+script(src='//cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js')
+script
+    $(function() {
+        // cache references to input controls
+        var email = $('#email');
+        var firstname = $('#first_name');
+        var lastname = $('#last_name');
+        var checkbox = $('#checkbox');
+        $("#register-form").kendoValidator({
+            rules: {
+                firstnamelength: function(input) {
+                    // passwords must match
+                    if (input.is(firstname)) {
+                        return $(firstname).val().length > 2
+                    }
+                    return true;
+                },
+                lastnamelength: function(input) {
+                    // passwords must match
+                    if (input.is(lastname)) {
+                        return $(lastname).val().length > 2
+                    }
+                    return true;
+                },
+            },
+            messages: {
+                // custom error messages. email gets picked up
+                // automatically for any inputs of that type
+                firstnamelength: "First names should be greater than 2 characters.",
+                lastnamelength: "Last names shouldn be greater than 2 characters.",
+                email: 'That doesn\'t appear to be a valid email address'
+            }
+        }).data('kendoValidator');
+    });
+

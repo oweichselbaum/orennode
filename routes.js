@@ -7,18 +7,33 @@ module.exports = function (app) {
         res.render('index', { user: req.user, message: req.flash('info') });
     });
 
-//    app.get('/account', ensureAuthenticated, function (req, res) {
-//        res.render('account', { user: req.user });
-//    });
-
     app.get('/account', ensureAuthenticated, function (req, res) {
         Account.findById(req.session.passport.user, function (err, user) {
             if (err) {
-                console.log(err);
-            } else {
-                res.render('account', { user: user});
+                return res.render("account", {info: "Sorry. Terms must be agreed to"});
             }
 
+            if (user.terms == false) {
+                res.render('account', { user: user});
+            } else {
+                req.flash('info', 'Thank you for using social sign in!');
+                res.redirect("/");
+            }
+
+        });
+    });
+
+    app.post('/account', function (req, res) {
+        Account.findById(req.session.passport.user, function (err, user) {
+            user.update({"terms": req.body.terms}, function (err, account) {
+                if (err) {
+                    return res.render("account", {info: "Sorry. Terms must be agreed to"});
+                }
+                passport.authenticate('facebook')(req, res, function () {
+                    req.flash('info', 'Thank you for doing Social registration!');
+                    res.render("/");
+                });
+            });
         });
     });
 
@@ -28,6 +43,7 @@ module.exports = function (app) {
         });
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', { failureRedirect: '/' }),
+
         function (req, res) {
             res.redirect('/account');
         });

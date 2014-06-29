@@ -62,7 +62,8 @@ passport.use(new FacebookStrategy({
                 var user = new Account({
                     username: profile.emails,
                     first_name: profile.name.givenName,
-                    last_name: profile.name.familyName
+                    last_name: profile.name.familyName,
+                    terms: false
                 });
                 user.save(function (err) {
                     if (err) {
