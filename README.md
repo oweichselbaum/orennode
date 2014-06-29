@@ -18,3 +18,11 @@ sudo mongod
 node app
 
 Navigate to http://localhost:1337/
+
+To see the DB
+
+$ mongo
+
+> use oren_node_project
+
+> db.accounts.find()
