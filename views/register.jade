@@ -1,102 +1,92 @@
-doctype html
-html
-    head
-        title= title
-        meta(name='viewport', content='width=device-width, initial-scale=1.0')
-        link(rel='stylesheet', href='//cdn.kendostatic.com/2013.3.1119/styles/kendo.common.min.css')
-        link(rel='stylesheet', href='//cdn.kendostatic.com/2013.3.1119/styles/kendo.bootstrap.min.css')
-        link(href='/css/bootstrap.min.css', rel='stylesheet', media='screen')
-        link(href='/css/main.css', rel='stylesheet', media='screen')
-        script(src='http://code.jquery.com/jquery.js')
-        script(src='js/bootstrap.min.js')
-    body
-    .container
-        h1 Register Page
-        p.lead Say something worthwhile here.
-        br
-        h4= info
-        form(id='register-form', role='form', action="/register",method="post")
-            .form-group
-                input.form-control(id='first_name', type='text', name="first_name", placeholder='Enter First Name', required, data-required-msg='First Name is required')
-            .form-group
-                input.form-control(id='last_name', type='text', name="last_name", placeholder='Enter Last Name', required, data-required-msg='Last Name is required')
-            .form-group
-                input.form-control(id='email', type='email', name="username", placeholder='Enter Email', required, data-required-msg='Email is required')
-            .form-group
-                input.form-control(id='password', type='password', name="password", placeholder='Password', required, data-required-msg='Password is required', pattern="^[a-zA-Z0-9]+$", validationMessage='Password should only contain letters and numbers')
-            .form-group
-                input(id='checkbox', type="checkbox", name="terms", required, data-required-msg='Checking the checkbox is required')
-                label
-                    | Agree to terms and conditions
+extends layout
+block content
+    #page-content-wrapper
+        .page-content.inset
+            .row
+                h1 Registration Page
+                p.lead Say something worthwhile here.
+                br
+                h4= info
+                form(id='register-form', role='form', action="/register",method="post")
+                    .form-group
+                        input.form-control(id='first_name', type='text', name="first_name", placeholder='Enter First Name', required, data-required-msg='First Name is required')
+                    .form-group
+                        input.form-control(id='last_name', type='text', name="last_name", placeholder='Enter Last Name', required, data-required-msg='Last Name is required')
+                    .form-group
+                        input.form-control(id='email', type='email', name="username", placeholder='Enter Email', required, data-required-msg='Email is required')
+                    .form-group
+                        input.form-control(id='password', type='password', name="password", placeholder='Password', required, data-required-msg='Password is required', pattern="^[a-zA-Z0-9]+$", validationMessage='Password should only contain letters and numbers')
+                    .form-group
+                        input(id='checkbox', type="checkbox", name="terms", required, data-required-msg='Checking the checkbox is required')
+                        label
+                            | Agree to terms and conditions
 
 
-            button.btn.btn-default(type='submit') Submit
-            &nbsp;
-            a(href='/')
-                button.btn.btn-primary(type="button") Cancel
+                    button.btn.btn-default(type='submit') Submit
+                    &nbsp;
+                    a(href='/')
+                        button.btn.btn-primary(type="button") Cancel
 
-script(src='//cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js')
+    script
 
-script
+        $(function() {
 
-    $(function() {
+            // cache references to input controls
+            var password = $('#password');
+            var email = $('#email');
+            var firstname = $('#first_name');
+            var lastname = $('#last_name');
+            var checkbox = $('#checkbox');
 
-        // cache references to input controls
-        var password = $('#password');
-        var email = $('#email');
-        var firstname = $('#first_name');
-        var lastname = $('#last_name');
-        var checkbox = $('#checkbox');
+            $("#register-form").kendoValidator({
 
-        $("#register-form").kendoValidator({
+                rules: {
 
-            rules: {
+                    firstnamelength: function(input) {
 
-                firstnamelength: function(input) {
+                        // passwords must match
 
-                    // passwords must match
+                        if (input.is(firstname)) {
+                            return $(firstname).val().length > 2
+                        }
 
-                    if (input.is(firstname)) {
-                        return $(firstname).val().length > 2
+                        return true;
+
+                    },
+
+                    lastnamelength: function(input) {
+
+                        // passwords must match
+
+                        if (input.is(lastname)) {
+                            return $(lastname).val().length > 2
+                        }
+
+                        return true;
+
+                    },
+                    passwordlength: function(input) {
+
+                        if (input.is(password)) {
+                            return $(password).val().length >= 8
+                        }
+
+                        return true;
+
                     }
-
-                    return true;
-
                 },
+                messages: {
 
-                lastnamelength: function(input) {
+                    // custom error messages. email gets picked up
+                    // automatically for any inputs of that type
 
-                    // passwords must match
-
-                    if (input.is(lastname)) {
-                        return $(lastname).val().length > 2
-                    }
-
-                    return true;
-
-                },
-                passwordlength: function(input) {
-
-                    if (input.is(password)) {
-                        return $(password).val().length >= 8
-                    }
-
-                    return true;
+                    firstnamelength: "First names should be greater than 2 characters.",
+                    lastnamelength: "Last names shouldn be greater than 2 characters.",
+                    passwordlength: "Your password isn\'t long has to be atleast 8 characters.",
+                    email: 'That doesn\'t appear to be a valid email address'
 
                 }
-            },
-            messages: {
 
-                // custom error messages. email gets picked up
-                // automatically for any inputs of that type
+            }).data('kendoValidator');
 
-                firstnamelength: "First names should be greater than 2 characters.",
-                lastnamelength: "Last names shouldn be greater than 2 characters.",
-                passwordlength: "Your password isn\'t long has to be atleast 8 characters.",
-                email: 'That doesn\'t appear to be a valid email address'
-
-            }
-
-        }).data('kendoValidator');
-
-    });
+        });

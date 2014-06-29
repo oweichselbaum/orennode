@@ -1,0 +1,20 @@
+extends layout
+block content
+    #page-content-wrapper
+        .page-content.inset
+            .row
+                #multiple-datasets
+                    input.typeahead(type="text", placeholder="NBA and NHL teams")
+                    a.search.button.btn.btn-primary(href='#') Search
+
+                .results
+
+            script
+                $('a.search').click(function(){
+                    var team = $('#multiple-datasets input[type=text]').last().val();
+                    if (team.length == 0) {
+                           $('.results').html('<h1>Who Rules?</h1>').fadeIn();
+                    } else {
+                        $('.results').html('<h1>'+ team + ' Rule!</h1>').fadeIn();
+                    }
+                });

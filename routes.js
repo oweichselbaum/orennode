@@ -77,8 +77,8 @@ module.exports = function (app) {
         res.redirect('/');
     });
 
-    app.get('/ping', function (req, res) {
-        res.send("pong!", 200);
+    app.get('/search', ensureAuthenticated, function (req, res) {
+        res.render('search', { user: req.user });
     });
 
     function ensureAuthenticated(req, res, next) {

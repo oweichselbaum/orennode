@@ -8,10 +8,16 @@ block content
                     i.fa.fa-bars
                 .col-md-12
                     h1 Welcome to Oren's Site
-                    p.lead There's a lot of info you want here
+                    p.lead
+                        | There's a lot of info you want here
+                        if (!user)
+                            br
+                            | Sign in to see my autocomplete page
+                        if (user)
+                            br
+                            | Now checkout my autocomplete page
                     if message
                         p.message= message
-                    a(href="/") Go home
                     br
                 if (!user)
                     a(href="/login") Login
@@ -21,6 +27,9 @@ block content
                     a(href="/auth/facebook") Login via Facebook
                 if (user)
                     p You are currently logged in as #{user.username}
+                    br
+                    a(href='/search') Search Page
+                    br
                     a(href="/logout") Logout
 
     script

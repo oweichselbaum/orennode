@@ -19,7 +19,7 @@ app.use(express.logger());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('keyboard cat'));
-app.use(express.session(({ cookie: { maxAge: 60000 }})));
+app.use(express.session());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
