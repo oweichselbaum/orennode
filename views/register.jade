@@ -15,7 +15,7 @@ block content
                     .form-group
                         input.form-control(id='email', type='email', name="username", placeholder='Enter Email', required, data-required-msg='Email is required')
                     .form-group
-                        input.form-control(id='password', type='password', name="password", placeholder='Password', required, data-required-msg='Password is required', pattern="^[a-zA-Z0-9]+$", validationMessage='Password should only contain letters and numbers')
+                        input.form-control(id='password', type='password', name="password", placeholder='Password', required, data-required-msg='Password is required', pattern="^[a-zA-Z0-9]+$", validationMessage='Password should only contain letters and numbers and be atleast 8 characters long')
                     .form-group
                         input(id='checkbox', type="checkbox", name="terms", required, data-required-msg='Checking the checkbox is required')
                         label

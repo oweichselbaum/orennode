@@ -107,7 +107,7 @@ span.twitter-typeahead {
 }
 
 #register-form {
-    width: 800px;
+    width: 900px;
 }
 
 #register-form label {
@@ -121,7 +121,7 @@ span.twitter-typeahead {
 }
 
 #register-form .form-group input {
-    width: 40%;
+    width: 33%;
     clear: both;
     float: left;
     margin: 0 20px 20px 0px;
@@ -133,7 +133,7 @@ span.twitter-typeahead {
 
 span[data-for="terms"] {
     float: right;
-    margin-right: 202px;
+    margin-right: 324px;
 }
 
 #wrapper {

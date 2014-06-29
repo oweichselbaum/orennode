@@ -1,4 +1,8 @@
 $(function () {
+    if ($('p.message').text() != "") {
+        $('p.message').wrap("<div class='alert'></div>")
+    }
+
     if (window.location.hash && window.location.hash == '#_=_') {
         window.location.hash = '';
     }

@@ -65,10 +65,10 @@ module.exports = function (app) {
     });
 
     app.get('/login', function (req, res) {
-        res.render('login', { user: req.user });
+        res.render('login', { user: req.user, error: req.flash('error')[0] });
     });
 
-    app.post('/login', passport.authenticate('local'), function (req, res) {
+    app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: 'Invalid email or password. If you haven\'t registered yet, please register'}), function (req, res) {
         res.redirect('/');
     });
 
