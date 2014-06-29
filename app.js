@@ -94,7 +94,7 @@ passport.deserializeUser(function (id, done) {
 
 
 // mongoose
-mongoose.connect('mongodb://localhost/passport_local_mongoose');
+mongoose.connect('mongodb://localhost/oren_node_project');
 
 // routes
 require('./routes')(app);
